@@ -2,9 +2,9 @@ Name:       gcd
 Summary:    GCD(Grand Central Dispatch) library
 Version:    1.0
 Release:    1
-License:    Apache License, Version 2.0 and BSD
+License:    Apache-2.0 and BSD-2-Clause
 Vendor:     AUTHOR
-Group:      System Environment/Libraries
+Group:      System/Libraries
 Source0:    %{name}-%{version}.tar.gz
 BuildRoot:  %{_tmppath}/%{name}-%{version}-build
 Provides:   libdispatch.so.0 libkqueue.so.0 libBlocksRuntime.so.0 libpthread_workqueue.so.0
@@ -15,8 +15,8 @@ BuildRequires:  clang
 GCD(Grand Central Dispatch) library.
 
 %package devel  
-Summary:    GCD(Grand Central Dispatch) library.  
-Group:      TO_BE/FILLED_IN  
+Summary:    GCD(Grand Central Dispatch) library  
+Group:      System/Libraries  
 Requires:   %{name} = %{version}-%{release}  
   
 %description devel  
@@ -27,7 +27,7 @@ GCD(Grand Central Dispatch) library. (DEV)
 
 %build
 
-export GCCVER=$(LANG=C gcc --version | head -1 | sed 's/\([a-z+]*\) \((.*)\) \([1-9\.]*\)\(.*\)/\3/')
+export GCCVER=$(LANG=C gcc --version | head -1 | sed 's/\([a-z+]*\) \((.*)\) \([0-9\.]*\)\(.*\)/\3/')
 
 cd kqueue-1.0.4
 ./configure --prefix=/usr
@@ -48,13 +48,13 @@ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:%{_builddir}/%{name}-%{version}/BlocksR
 export CFLAGS="$CFLAGS -L%{_builddir}/%{name}-%{version}/BlocksRuntime-0.1 -lBlocksRuntime -I%{_builddir}/%{name}-%{version}/BlocksRuntime-0.1 -Xlinker --build-id"
 
 %ifarch %{ix86}
-export CC="clang -target i386-tizen-linux-gnueabi"
-export CFLAGS="$CFLAGS -Xlinker -L/usr/lib/gcc/i586-tizen-linux/$GCCVER"
-export COMPILER_PATH=/usr/lib/gcc/i586-tizen-linux/$GCCVER
+export CC="clang -target i586-tizen-linux"
+export CFLAGS="$CFLAGS -Xlinker -L/usr/lib/gcc/i586-tizen-linux/4.8"
+export COMPILER_PATH=/usr/lib/gcc/i586-tizen-linux/4.8
 %else
-export CC="clang -target arm-tizen-linux-gnueabi"
-export CFLAGS="$CFLAGS -Xlinker -L/usr/lib/gcc/armv7l-tizen-linux-gnueabi/$GCCVER"
-export COMPILER_PATH=/usr/lib/gcc/armv7l-tizen-linux-gnueabi/$GCCVER
+export CC="clang -target %{_target_cpu}-tizen-linux-gnueabi"
+export CFLAGS="$CFLAGS -Xlinker -L/usr/lib/gcc/%{_target_cpu}-tizen-linux-gnueabi/4.8"
+export COMPILER_PATH=/usr/lib/gcc/%{_target_cpu}-tizen-linux-gnueabi/4.8
 %endif
 
 ./configure --with-blocks-runtime=/usr/lib --prefix=/usr
