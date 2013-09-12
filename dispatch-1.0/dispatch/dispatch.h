@@ -33,7 +33,13 @@
 #include <stdbool.h>
 #include <stdarg.h>
 #if HAVE_UNISTD_H
+#ifdef __BLOCKS__
+#undef __block
+#endif
 #include <unistd.h>
+#ifdef __BLOCKS__
+#define __block __attribute__((__blocks__(byref)))
+#endif
 #endif
 
 #if defined(__cplusplus)
