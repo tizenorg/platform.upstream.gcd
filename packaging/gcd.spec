@@ -1,5 +1,3 @@
-%define gcc_version %(LANG=C gcc --version | head -1 | sed 's/.* (.*) \([0-9]\.[0-9]\).*$/\1/')
-
 Name:       gcd
 Summary:    GCD(Grand Central Dispatch) library
 Version:    1.0
@@ -44,6 +42,7 @@ export KQUEUE_LIBS="/usr/lib"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:%{_builddir}/%{name}-%{version}/BlocksRuntime-0.1"
 export CFLAGS="$CFLAGS -L%{_builddir}/%{name}-%{version}/BlocksRuntime-0.1 -lBlocksRuntime -I%{_builddir}/%{name}-%{version}/BlocksRuntime-0.1 -Xlinker --build-id"
 
+gcc_version=`gcc --version | head -1 | sed 's/.* (.*) \([0-9]\.[0-9]\).*$/\1/'`
 %ifarch %{ix86}
 export CC="clang -target i586-tizen-linux"
 export CFLAGS="$CFLAGS -Xlinker -L/usr/lib/gcc/i586-tizen-linux/%{gcc_version}"
@@ -115,5 +114,3 @@ find %{?buildroot:%{buildroot}} -regex ".*\\.la$" | xargs rm -f --
 /usr/share/man/man2/kqueue.2.gz
 /usr/share/man/man2/kevent.2.gz
 /usr/share/man/man3/dispatch*
-
-%changelog
