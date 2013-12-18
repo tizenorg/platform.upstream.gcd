@@ -1,4 +1,4 @@
-%define gcc_version %(LANG=C gcc --version | head -1 | sed 's/.* (.*) \([0-9]\.[0-9]\).*$/\1/')
+%define gcc_version %(LANG=C gcc --version | head -1 | sed 's/.* (.*) \\([0-9]\\.[0-9]\\).*$/\\1/')
 
 Name:       gcd
 Summary:    GCD(Grand Central Dispatch) library
@@ -115,5 +115,3 @@ find %{?buildroot:%{buildroot}} -regex ".*\\.la$" | xargs rm -f --
 /usr/share/man/man2/kqueue.2.gz
 /usr/share/man/man2/kevent.2.gz
 /usr/share/man/man3/dispatch*
-
-%changelog
