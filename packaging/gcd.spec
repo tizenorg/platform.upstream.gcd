@@ -36,14 +36,14 @@ export KQUEUE_LIBS="%{_libdir}"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:%{_builddir}/%{name}-%{version}/BlocksRuntime-0.1"
 export CFLAGS="$CFLAGS -L%{_builddir}/%{name}-%{version}/BlocksRuntime-0.1 -lBlocksRuntime -I%{_builddir}/%{name}-%{version}/BlocksRuntime-0.1 -Xlinker --build-id"
 
+export COMPILER_PATH="%{_libdir}/gcc/$(gcc -v 2>&1 | grep Target | sed -e 's/.*\s//')/$(gcc -v 2>&1 | grep 'gcc version' | sed -e 's/gcc\sversion\s//;s/\.[[:digit:]]\s.*$//')"
+
 %ifarch %{ix86}
 export CC="clang -target i586-tizen-linux"
-export CFLAGS="$CFLAGS -Xlinker -L%{_libdir}/gcc/i586-tizen-linux/%{gcc_version}"
-export COMPILER_PATH=%{_libdir}/gcc/i586-tizen-linux/%{gcc_version}
+export CFLAGS="$CFLAGS -Xlinker -L$COMPILER_PATH"
 %else
 export CC="clang -target %{_target_cpu}-tizen-linux"
-export CFLAGS="$CFLAGS -Xlinker -L%{_libdir}/gcc/%{_target_cpu}-tizen-linux/%{gcc_version}"
-export COMPILER_PATH=%{_libdir}/gcc/%{_target_cpu}-tizen-linux/%{gcc_version}
+export CFLAGS="$CFLAGS -Xlinker -L$COMPILER_PATH"
 %endif
 
 %configure --with-blocks-runtime=%{_libdir}
