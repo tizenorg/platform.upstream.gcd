@@ -34,7 +34,7 @@ pushd dispatch-1.0
 export KQUEUE_CFLAGS="-I../../kqueue-1.0.4/include"
 export KQUEUE_LIBS="%{_libdir}"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:%{_builddir}/%{name}-%{version}/BlocksRuntime-0.1"
-export CFLAGS="$CFLAGS -L%{_builddir}/%{name}-%{version}/BlocksRuntime-0.1 -lBlocksRuntime -I%{_builddir}/%{name}-%{version}/BlocksRuntime-0.1 -Xlinker --build-id"
+export CFLAGS="$(echo $CFLAGS | sed -e 's/-fipa-cp-clone//;s/-mlittle-endian//') -L%{_builddir}/%{name}-%{version}/BlocksRuntime-0.1 -lBlocksRuntime -I%{_builddir}/%{name}-%{version}/BlocksRuntime-0.1 -Xlinker --build-id"
 
 export COMPILER_PATH="%{_libdir}/gcc/$(gcc -v 2>&1 | grep Target | sed -e 's/.*\s//')/$(gcc -v 2>&1 | grep 'gcc version' | sed -e 's/gcc\sversion\s//;s/\.[[:digit:]]\s.*$//')"
 
