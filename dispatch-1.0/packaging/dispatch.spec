@@ -45,7 +45,9 @@ user space implementation of the Grand Central Dispatch API. (DEV)
 %setup -q -n dispatch-1.0
 
 %build
-./configure --prefix=/usr
+/bin/sh autogen.sh
+%reconfigure 
+
 make
 
 %install

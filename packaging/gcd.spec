@@ -46,6 +46,7 @@ export CC="clang -target %{_target_cpu}-tizen-linux"
 export CFLAGS="$CFLAGS -Xlinker -L$COMPILER_PATH"
 %endif
 
+/bin/sh autogen.sh
 %configure --with-blocks-runtime=%{_libdir}
 make
 popd
