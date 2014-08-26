@@ -89,7 +89,7 @@ dispatch_benchmark_f(size_t count, register void *ctxt, register void (*func)(vo
 	};
 	static dispatch_once_t pred;
 	uint64_t ns, start, delta;
-#ifdef __LP64__
+#ifdef __x86_64__
 	__uint128_t conversion, big_denom;
 #else
 	long double conversion, big_denom;
